@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utkarsh Sharma — Full Stack & Automation Engineer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #F2F0EB;
+      --bg-dark: #1A1A18;
+      --text: #343434;
+      --text-muted: #6B6B65;
+      --border: #D4D2CB;
+      --mono: 'Space Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2.5rem;
+      background: rgba(242, 240, 235, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: none;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-logo:hover {
+      opacity: 0.6;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--text);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2.5rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: var(--mono);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--text);
+      vertical-align: text-bottom;
+      animation: blink 0.8s steps(1) infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .hero-sub {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    /* NEW GALLERY & TYPING STYLES */
+    .gallery-section {
+      background: var(--bg-dark);
+      padding: 5rem 2.5rem;
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-auto-rows: 300px;
+    }
+
+    .masonry-item {
+      background-color: #2a2a28;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s, filter 0.3s;
+      filter: grayscale(100%);
+    }
+
+    .masonry-item:hover {
+      transform: scale(1.02);
+      filter: grayscale(0%);
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .masonry-item.wide {
+      grid-column: span 2;
+    }
+
+    .masonry-item.tall {
+      grid-row: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .masonry-item.wide {
+        grid-column: span 1;
+      }
+
+      .gallery-section {
+        grid-auto-rows: 200px;
+      }
+    }
+
+    .typing-header {
+      font-family: var(--mono);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-corners {
+      position: absolute;
+      bottom: 2rem;
+      left: 2.5rem;
+      right: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hero-corner-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 0.9rem 2rem;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 0.9rem 2rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--text);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 5rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .stack-min-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .stack-min-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+    }
+
+    .about-text {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 2;
+      color: var(--text-muted);
+    }
+
+    .about-text strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      width: 100%;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .about-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .stat {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: var(--text);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stack-sub {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    .stack-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .stack-group {
+      transition: transform 0.2s;
+    }
+
+    .stack-group:hover {
+      transform: translateY(-3px);
+    }
+
+    .stack-group h4 {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .tag:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .exp-items {
+      margin-top: 1rem;
+    }
+
+    .exp-item {
+      padding: 2rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .exp-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-item:hover {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      padding-top: 0.2rem;
+    }
+
+    .exp-role {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .exp-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+
+    .projects-section {
+      background: var(--bg-dark);
+      color: #F2F0EB;
+      border-top: none;
+    }
+
+    .projects-section .section-label {
+      color: #6B6B65;
+    }
+
+    .projects-header {
+      font-family: var(--mono);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #F2F0EB;
+      margin-bottom: 0.8rem;
+    }
+
+    .projects-sub {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #6B6B65;
+      margin-bottom: 3rem;
+      max-width: 500px;
+      line-height: 1.8;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      position: relative;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      transition: background 0.3s;
+      border-radius: 12px;
+    }
+
+    .project-card:hover::before {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .p1 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .p2 {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .p3 {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .p4 {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .p5 {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .p6 {
+      background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    }
+
+    .project-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 100px;
+      color: white;
+      letter-spacing: 0.05em;
+      z-index: 1;
+    }
+
+    .project-name {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-type {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-tags-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 0.2rem 0.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 100px;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.03em;
+    }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--bg);
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      transform: translateY(24px);
+      transition: transform 0.25s;
+      position: relative;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .modal-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-title {
+      font-family: var(--mono);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-subtitle {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #2a2a28;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .modal-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: zoom-in;
+    }
+
+    .modal-img-placeholder {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #6B6B65;
+      text-align: center;
+      padding: 2rem;
+      line-height: 1.8;
+    }
+
+    .modal-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 2;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-muted);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 2.5rem 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-about {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-social a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .footer-social a:hover {
+      color: var(--text);
+      border-color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .footer-col h5 {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-col ul li {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-col ul li a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .footer-col ul li a:hover {
+      color: var(--text);
+      transform: translateX(4px);
+    }
+
+    .footer-contact-item {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--text);
+      transform: translateX(4px);
+    }
+
+    .two-col-layout {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      max-width: 850px;
+      margin: 0 auto;
+      align-items: start;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+
+      .about-grid,
+      .footer-grid,
+      .two-col-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .two-col-layout>div:first-child {
+        display: none;
+      }
+
+      .hero-corners {
+        display: none;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .hero,
+      section {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .modal {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">US.</a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <h1>UTKARSH SHARMA</h1>
+    <p class="hero-sub">Self-taught Full Stack Developer & Automation Engineer.<br>Building real systems since March
+      2025.</p>
+    <div class="hero-btns">
+      <a href="mailto:utkarshsharma9571@gmail.com" class="btn">Contact Me</a>
+      <button class="btn-outline" onclick="openModal('resume-modal')">View Resume</button>
+    </div>
+    <div class="hero-corners">
+      <span class="hero-corner-text">Full Stack Developer</span>
+      <span class="hero-corner-text">Automation Engineer</span>
+    </div>
+  </section>
+
+  <!-- DYNAMIC IMAGE GALLERY -->
+  <section class="gallery-section">
+    <div class="masonry-item tall"
+      style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop');">
+    </div>
+    <div class="masonry-item wide"
+      style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop');">
+    </div>
+    <div class="masonry-item"
+      style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop');">
+    </div>
+    <div class="masonry-item"
+      style="background-image: url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=800&auto=format&fit=crop');">
+    </div>
+    <div class="masonry-item wide"
+      style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop');">
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-grid" style="align-items: center;">
+      <div>
+        <h2 id="typewriter" class="typing-header"><span class="cursor"></span></h2>
+      </div>
+      <div class="about-text">
+        <p class="section-label" style="margin-bottom: 2rem;">// about</p>
+        I come from a non-tech background (<strong>M.Com</strong>) and started learning development in
+        <strong>2025</strong>.<br><br>
+        Right now, I’m working on <strong>real systems</strong> — deploying websites, managing a VPS, and building
+        automation workflows.<br><br>
+        I learn mostly by <strong>doing and fixing things</strong> when they break.<br><br>
+        My focus is to grow into a <strong>DevOps/automation role</strong> and work with international teams.
+      </div>
+    </div> <!-- Close about-grid early here! -->
+
+    <div class="about-stats">
+      <div class="stat"><span class="stat-num">8+</span><span class="stat-label">Production grade n8n Workflows
+          Built</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Live Production Sites</span></div>
+      <div class="stat"><span class="stat-num">1yr</span><span class="stat-label">Self-Taught Journey</span></div>
+      <div class="stat"><span class="stat-num">0</span><span class="stat-label">CS Degree Required</span></div>
+    </div>
+  </section>
+
+  <section id="stack" style="border-top: none; padding-top: 5rem;">
+    <div class="two-col-layout">
+      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text);">··</div>
+      <div>
+        <h2
+          style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; text-transform: uppercase;">
+          TECH STACK</h2>
+        <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+          I specialize in infrastructure, automation, and full-stack systems — building things that run reliably in
+          production.
+        </p>
+
+        <div class="stack-min-grid">
+          <div>
+            <h4
+              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              Infrastructure & DevOps</h4>
+            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">VPS ·
+              Nginx · Docker · Linux · Traefik · Dokploy · AWS EC2 · GCP · Terraform · GitHub Actions</p>
+          </div>
+          <div>
+            <h4
+              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              Automation & AI</h4>
+            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">n8n ·
+              Gemini AI · Cloudinary · Telegram Bot · Google Sheets API · REST APIs · Webhooks</p>
+          </div>
+          <div>
+            <h4
+              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              Backend & Full Stack</h4>
+            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">Node.js ·
+              Express.js · MongoDB · PostgreSQL · React · JWT Auth · MERN Stack</p>
+          </div>
+          <div>
+            <h4
+              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              Tools & Platforms</h4>
+            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">Git ·
+              GitHub · Odoo ERP · WordPress · Trae IDE · Cursor</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" style="border-top: none; padding-top: 5rem;">
+    <div class="two-col-layout">
+      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text);">··</div>
+      <div>
+        <h2
+          style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 2rem; text-transform: uppercase;">
+          EXPERIENCE</h2>
+
+        <div style="margin-bottom: 2.5rem;">
+          <h3
+            style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
+            GKWebTech – Full Stack & Automation Engineer</h3>
+          <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+            Sole technical owner of all production infrastructure. Managing VPS, Nginx reverse proxy, Docker containers,
+            SSL, and DNS for 3 live websites. Built 8+ n8n workflows including AI chatbots, multilingual SEO blog
+            pipelines, and LinkedIn automation. Self-hosted Odoo ERP from scratch. Mentoring junior developers across
+            timezones.
+          </p>
+        </div>
+
+        <div>
+          <h3
+            style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
+            Independent – Self-Directed Learning & Project Building</h3>
+          <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+            Taught myself frontend, backend, cloud, and DevOps through open-source materials. Built 40+ full-stack
+            projects, deployed apps on AWS EC2 and GCP, and built CI/CD pipelines with GitHub Actions and Terraform from
+            scratch with no CS background.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects-section" id="projects">
+    <p class="section-label">// projects</p>
+    <h2 class="projects-header">FEATURED PROJECTS</h2>
+    <p class="projects-sub">Click any project to see full details, screenshots, and tech breakdown.</p>
+    <div class="projects-grid">
+      <div class="project-card p1" onclick="openModal('modal-gkwebtech')">
+        <span class="project-badge">Live</span>
+        <p class="project-name">GKWebTech</p>
+        <p class="project-type">Agency Website — MERN Stack</p>
+        <div class="project-tags-row"><span class="project-tag">React</span><span
+            class="project-tag">Node.js</span><span class="project-tag">MongoDB</span><span
+            class="project-tag">Nginx</span><span class="project-tag">EN/NL/DE</span></div>
+      </div>
+      <div class="project-card p2" onclick="openModal('modal-blog-pipeline')">
+        <span class="project-badge">Production</span>
+        <p class="project-name">SEO Blog Pipeline</p>
+        <p class="project-type">Multilingual Automation — n8n</p>
+        <div class="project-tags-row"><span class="project-tag">n8n</span><span class="project-tag">Gemini
+            AI</span><span class="project-tag">Cloudinary</span><span class="project-tag">3 Languages</span></div>
+      </div>
+      <div class="project-card p3" onclick="openModal('modal-vps-recovery')">
+        <span class="project-badge">Incident Response</span>
+        <p class="project-name">VPS Recovery</p>
+        <p class="project-type">Production Outage — Zero Data Loss</p>
+        <div class="project-tags-row"><span class="project-tag">Docker</span><span
+            class="project-tag">Traefik</span><span class="project-tag">Linux</span><span
+            class="project-tag">Dokploy</span></div>
+      </div>
+      <div class="project-card p4" onclick="openModal('modal-odoo')">
+        <span class="project-badge">Live</span>
+        <p class="project-name">Odoo ERP</p>
+        <p class="project-type">Self-Hosted ERP Deployment</p>
+        <div class="project-tags-row"><span class="project-tag">Odoo</span><span class="project-tag">Docker</span><span
+            class="project-tag">VPS</span><span class="project-tag">PostgreSQL</span></div>
+      </div>
+      <div class="project-card p5" onclick="openModal('modal-institute')">
+        <span class="project-badge">Live</span>
+        <p class="project-name">GK Institute</p>
+        <p class="project-type">Institute Website — Next.js</p>
+        <div class="project-tags-row"><span class="project-tag">Next.js</span><span
+            class="project-tag">Tailwind</span><span class="project-tag">MongoDB</span><span
+            class="project-tag">GDPR</span></div>
+      </div>
+      <div class="project-card p6" onclick="openModal('modal-linkedin-bot')">
+        <span class="project-badge">Automation</span>
+        <p class="project-name">LinkedIn Bot</p>
+        <p class="project-type">Content Automation — Telegram Triggered</p>
+        <div class="project-tags-row"><span class="project-tag">n8n</span><span class="project-tag">Telegram</span><span
+            class="project-tag">LinkedIn API</span><span class="project-tag">AI Content</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>Me</h5>
+        <p class="footer-about">Self-taught developer from Alwar, Rajasthan. Building production systems and automation
+          pipelines. Documenting the journey on YouTube.</p>
+        <div class="footer-social">
+          <a href="https://linkedin.com/in/utkarsh-sharma-2b9110362" target="_blank"
+            style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path
+                d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
+            </svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/Utkarsh9571" target="_blank"
+            style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+            GitHub
+          </a>
+          <a href="mailto:utkarshsharma9571@gmail.com" style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path
+                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+            </svg>
+            Email
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#projects">Projects</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20VPS%20Infrastructure">VPS
+              Infrastructure</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20n8n%20Automation">n8n Automation</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20Full%20Stack%20Development">Full Stack
+              Dev</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20DevOps%20Setup">DevOps Setup</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20ERP%20Deployment">ERP Deployment</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact Me</h5>
+        <p class="footer-contact-item">📍 Alwar, Rajasthan, India</p>
+        <p class="footer-contact-item">📧 utkarshsharma9571@gmail.com</p>
+        <p class="footer-contact-item">📱 +91 9571238304</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 UTKARSH SHARMA. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="https://github.com/Utkarsh9571" target="_blank">Follow Me On Github</a>
+        <a href="mailto:utkarshsharma9571@gmail.com">Have a nice day!</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- RESUME MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="resume-modal" onclick="handleOverlay(event,'resume-modal')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('resume-modal')">✕</button>
+      <span class="modal-badge">Document</span>
+      <h2 class="modal-title">Resume</h2>
+      <iframe src="Utkarsh_Sharma_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0"
+        style="width: 100%; height: 65vh; border: none; border-radius: 8px; margin-bottom: 1.5rem;"
+        title="Utkarsh Sharma Resume"></iframe>
+      <div class="modal-actions">
+        <a href="media/Utkarsh_Sharma_Resume.pdf" download class="btn">Download PDF</a>
+        <a href="https://linkedin.com/in/utkarsh-sharma-2b9110362" target="_blank" class="btn-outline">View LinkedIn</a>
+        <a href="https://github.com/Utkarsh9571" target="_blank" class="btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- GKWEBTECH MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-gkwebtech" onclick="handleOverlay(event,'modal-gkwebtech')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-gkwebtech')">✕</button>
+      <span class="modal-badge">Live Website</span>
+      <h2 class="modal-title">GKWebTech</h2>
+      <p class="modal-subtitle">Digital Agency Website — MERN Stack</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/gkwebtech.png" alt="GKWebTech">
+      </div>
+      <p class="modal-desc">Full-stack MERN agency website targeting Netherlands and Germany markets. Features
+        multilingual support (English, Dutch, German) with hreflang SEO tags, GDPR-compliant cookie consent system, AI
+        chatbot, contact form with email integration, and automated blog section. Deployed on Hostinger VPS using
+        Dokploy with Nginx reverse proxy and Let's Encrypt SSL.</p>
+      <div class="modal-tags"><span class="modal-tag">React</span><span class="modal-tag">Node.js</span><span
+          class="modal-tag">MongoDB</span><span class="modal-tag">Nginx</span><span class="modal-tag">Docker</span><span
+          class="modal-tag">Multilingual SEO</span><span class="modal-tag">GDPR</span></div>
+      <div class="modal-actions"><a href="https://gkwebtech.cloud/" target="_blank" class="btn">Visit Live Site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOG PIPELINE MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-blog-pipeline"
+    onclick="handleOverlay(event,'modal-blog-pipeline')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-blog-pipeline')">✕</button>
+      <span class="modal-badge">Automation</span>
+      <h2 class="modal-title">SEO Blog Pipeline</h2>
+      <p class="modal-subtitle">Multilingual Content Automation — n8n</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/blog-pipeline.png" alt="Blog Pipeline Workflow">
+      </div>
+      <p class="modal-desc">End-to-end automated SEO blog generation pipeline. Picks keywords from Google Sheets,
+        selects primary and secondary keywords using AI, generates full SEO blog in English, translates to Dutch and
+        German maintaining HTML structure, fetches image from Unsplash, uploads to Cloudinary, saves to Google Sheets
+        for human approval, then auto-publishes approved blogs to MongoDB. Website renders new blogs instantly without
+        redeployment.</p>
+      <div class="modal-tags"><span class="modal-tag">n8n</span><span class="modal-tag">Gemini AI</span><span
+          class="modal-tag">Cloudinary</span><span class="modal-tag">Google Sheets API</span><span
+          class="modal-tag">MongoDB</span><span class="modal-tag">EN/NL/DE</span></div>
+      <div class="modal-actions"><a href="https://gkwebtech.cloud/blogs" target="_blank" class="btn">See Live Blogs</a>
+        <a href="https://github.com/Utkarsh9571/n8n-automation-workflows.git" target="_blank"
+          class="btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VPS RECOVERY MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-vps-recovery"
+    onclick="handleOverlay(event,'modal-vps-recovery')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-vps-recovery')">✕</button>
+      <span class="modal-badge">Incident Response</span>
+      <h2 class="modal-title">Production VPS Recovery</h2>
+      <p class="modal-subtitle">Critical Infrastructure Recovery — Zero Data Loss in 72 Hours</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/vps-recovery.png" alt="VPS Recovery">
+      </div>
+      <p class="modal-desc">Dokploy deployment manager suffered critical data corruption taking all 3 production
+        websites offline. Diagnosed failure by checking Docker service status — containers still running but Traefik
+        routing was destroyed. Manually rebuilt Traefik configuration, redeployed websites from GitHub, and recovered
+        n8n automation workflows by extracting the SQLite database file directly from inside the container filesystem.
+        Zero data loss, all systems restored within 72 hours.</p>
+      <div class="modal-tags"><span class="modal-tag">Docker</span><span class="modal-tag">Traefik</span><span
+          class="modal-tag">Linux CLI</span><span class="modal-tag">Dokploy</span><span class="modal-tag">Incident
+          Response</span></div>
+      <div class="modal-actions"><a href="https://github.com/Utkarsh9571/production-infrastructure.git" target="_blank"
+          class="btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ODOO MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-odoo" onclick="handleOverlay(event,'modal-odoo')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-odoo')">✕</button>
+      <span class="modal-badge">ERP Deployment</span>
+      <h2 class="modal-title">Odoo ERP</h2>
+      <p class="modal-subtitle">Self-Hosted Enterprise ERP on Production VPS</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/odoo-dashboard.png" alt="Odoo ERP Dashboard">
+      </div>
+      <p class="modal-desc">Deployed Odoo Community Edition on production VPS for clinic inventory management. Evaluated
+        ERPNext first — encountered version compatibility issues. Pivoted to Odoo, deployed via Docker, configured
+        inventory management with batch and expiry tracking, POS billing system, CRM, and attendance modules. Trained
+        clinic staff and achieved full adoption within one week. Managing live clinic inventory for over 3 weeks.</p>
+      <div class="modal-tags"><span class="modal-tag">Odoo</span><span class="modal-tag">Docker</span><span
+          class="modal-tag">VPS</span><span class="modal-tag">PostgreSQL</span><span class="modal-tag">Inventory
+          Management</span></div>
+      <div class="modal-actions"><a href="https://github.com/Utkarsh9571/production-infrastructure.git" target="_blank"
+          class="btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTITUTE MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-institute" onclick="handleOverlay(event,'modal-institute')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-institute')">✕</button>
+      <span class="modal-badge">Live Website</span>
+      <h2 class="modal-title">GK Institute</h2>
+      <p class="modal-subtitle">Training Institute Website — Next.js</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/institute.png" alt="GK Institute">
+      </div>
+      <p class="modal-desc">Marketing website for GK Institute offering digital skills courses. Built with Next.js and
+        Tailwind CSS, featuring course catalog pages, GDPR-compliant cookie consent, contact and lead capture forms, and
+        course brochure delivery via email automation. Deployed on VPS using Dokploy with CI/CD via GitHub.</p>
+      <div class="modal-tags"><span class="modal-tag">Next.js</span><span class="modal-tag">Tailwind CSS</span><span
+          class="modal-tag">MongoDB</span><span class="modal-tag">GDPR</span><span class="modal-tag">Email
+          Automation</span></div>
+      <div class="modal-actions"><a href="https://institute.gkwebtech.cloud/" target="_blank" class="btn">Visit Live
+          Site</a></div>
+    </div>
+  </div>
+
+  <!-- LINKEDIN BOT MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-linkedin-bot"
+    onclick="handleOverlay(event,'modal-linkedin-bot')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-linkedin-bot')">✕</button>
+      <span class="modal-badge">Automation</span>
+      <h2 class="modal-title">LinkedIn Content Bot</h2>
+      <p class="modal-subtitle">Telegram-Triggered Social Media Automation — Running 2+ Months</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/linkedin-workflow.png" alt="LinkedIn Automation Workflow">
+      </div>
+      <p class="modal-desc">Automated LinkedIn content pipeline for two company pages. Send a topic via Telegram, n8n
+        receives it, generates AI content using Gemini AI, selects a relevant image, and posts to the LinkedIn company
+        page automatically. Duplicated and adapted for Ayurvedastro WordPress site. Running in production for 2+ months
+        with zero failures.</p>
+      <div class="modal-tags"><span class="modal-tag">n8n</span><span class="modal-tag">Telegram Bot API</span><span
+          class="modal-tag">LinkedIn API</span><span class="modal-tag">Gemini AI</span><span
+          class="modal-tag">WordPress</span></div>
+      <div class="modal-actions"><a href="https://www.linkedin.com/company/gk-webtech/" target="_blank"
+          class="btn-outline">See
+          LinkedIn Page</a>
+        <a href="https://github.com/Utkarsh9571/n8n-automation-workflows.git" target="_blank"
+          class="btn-outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+
+    }
+    function handleOverlay(e, id) {
+      if (e.target === document.getElementById(id)) closeModal(id);
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(function (m) {
+          m.classList.remove('active');
+        });
+        document.body.style.overflow = '';
+
+      }
+    });
+
+    // TYPEWRITER
+    var lines = ["I'M UTKARSH", "BASED IN", "ALWAR."];
+    var el = document.getElementById('typewriter');
+    var cursor = el.querySelector('.cursor');
+    var lineIdx = 0, charIdx = 0;
+    var hasStartedTyping = false;
+
+    function type() {
+      if (!el || !cursor) return;
+      if (lineIdx >= lines.length) { cursor.style.display = 'none'; return; }
+      var line = lines[lineIdx];
+      if (charIdx < line.length) {
+        cursor.before(document.createTextNode(line[charIdx]));
+        charIdx++;
+        setTimeout(type, charIdx === 1 ? 80 : 55);
+      } else {
+        lineIdx++;
+        charIdx = 0;
+        if (lineIdx < lines.length) {
+          cursor.before(document.createElement('br'));
+          setTimeout(type, 200);
+        } else {
+          setTimeout(function () { cursor.style.display = 'none'; }, 800);
+        }
+      }
+    }
+
+    // Start typing when the About section comes into view
+    if (el && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting && !hasStartedTyping) {
+          hasStartedTyping = true;
+          setTimeout(type, 300);
+          observer.disconnect();
+        }
+      }, { threshold: 0.5 });
+      observer.observe(el);
+    } else {
+      setTimeout(type, 500);
+    }
+  </script>
+
+  <!-- Lenis Smooth Scrolling -->
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.5,
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          lenis.scrollTo(target, { duration: 1.8, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        }
+      });
+    });
+  </script>
+
+  <!-- Viewer.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js"></script>
+  <script>
+    document.querySelectorAll('.zoomable').forEach(img => {
+      new Viewer(img, {
+        inline: false,
+        button: true,
+        navbar: false,
+        title: false,
+        toolbar: true,
+        tooltip: false,
+        movable: true,
+        zoomable: true,
+        rotatable: false,
+        scalable: false,
+        transition: true,
+        fullscreen: true,
+        keyboard: true,
+        show: function () { if (typeof lenis !== 'undefined') lenis.stop(); },
+        hidden: function () { if (typeof lenis !== 'undefined') lenis.start(); }
+      });
+    });
+  </script>
+</body>
+
+</html>
