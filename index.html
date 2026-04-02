@@ -19,13 +19,22 @@
     }
 
     :root {
-      --bg: #F2F0EB;
-      --bg-dark: #1A1A18;
-      --text: #343434;
-      --text-muted: #6B6B65;
-      --border: #D4D2CB;
+      --bg: #0f0f10;
+      /* Background */
+      --bg-dark: #1a1a1d;
+      /* Secondary */
+      --text: #ffffff;
+      /* Brighter for contrast */
+      --text-muted: #94a3b8;
+      /* Muted for readability */
+      --border: #2a2a2e;
+      /* Subtle borders */
+      --accent: #00ff9c;
+      /* Vibrant Green */
+      --accent-glow: rgba(0, 255, 156, 0.2);
       --mono: 'Space Mono', monospace;
       --sans: 'DM Sans', sans-serif;
+      --card-radius: 12px;
     }
 
     body {
@@ -33,6 +42,23 @@
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* SUBTLE GRID TEXTURE */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: -1;
     }
 
     nav {
@@ -45,9 +71,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 1.5rem 2.5rem;
-      background: rgba(242, 240, 235, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: none;
+      background: rgba(15, 15, 16, 0.8);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
@@ -83,21 +110,23 @@
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -2px;
+      bottom: -4px;
       left: 0;
       right: 0;
-      height: 1px;
-      background: var(--text);
+      height: 2px;
+      background: var(--accent);
       transform: scaleX(0);
-      transition: transform 0.2s;
+      transform-origin: right;
+      transition: transform 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: var(--text);
+      color: var(--accent);
     }
 
     .nav-links a:hover::after {
       transform: scaleX(1);
+      transform-origin: left;
     }
 
     .hero {
@@ -116,19 +145,26 @@
       font-size: clamp(2.5rem, 6vw, 5rem);
       font-weight: 700;
       line-height: 1;
-      letter-spacing: 0.05em;
+      letter-spacing: -0.02em;
       text-transform: uppercase;
       color: var(--text);
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero h1::before {
+      content: '> ';
+      color: var(--accent);
+      font-weight: 400;
     }
 
     .cursor {
       display: inline-block;
-      width: 3px;
-      height: 1em;
-      background: var(--text);
-      vertical-align: text-bottom;
-      animation: blink 0.8s steps(1) infinite;
+      width: 0.5em;
+      height: 0.05em;
+      background: var(--accent);
+      vertical-align: baseline;
+      animation: blink 1s infinite;
       margin-left: 2px;
     }
 
@@ -247,42 +283,46 @@
     .btn {
       display: inline-block;
       font-family: var(--mono);
-      font-size: 12px;
-      padding: 0.9rem 2rem;
-      background: var(--text);
-      color: var(--bg);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 1rem 2.2rem;
+      background: var(--accent);
+      color: #000;
       border: none;
-      border-radius: 100px;
+      border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
       letter-spacing: 0.03em;
-      transition: transform 0.2s, opacity 0.2s;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px var(--accent-glow);
     }
 
     .btn:hover {
-      opacity: 0.8;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px var(--accent-glow);
+      filter: brightness(1.1);
     }
 
     .btn-outline {
       display: inline-block;
       font-family: var(--mono);
-      font-size: 12px;
-      padding: 0.9rem 2rem;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 1rem 2.2rem;
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
-      border-radius: 100px;
+      border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
       letter-spacing: 0.03em;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
     .btn-outline:hover {
-      background: var(--text);
-      color: var(--bg);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text);
+      transform: translateY(-3px);
     }
 
     section {
@@ -356,17 +396,37 @@
     }
 
     .stat {
-      padding: 1.5rem;
+      padding: 2rem;
+      background: var(--bg-dark);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      border-radius: var(--card-radius);
+      transition: all 0.3s ease;
       cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
     }
 
     .stat:hover {
-      transform: translateY(-4px);
-      border-color: var(--text);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .stat:hover::after {
+      transform: scaleX(1);
     }
 
     .stat-num {
@@ -428,21 +488,22 @@
 
     .tag {
       font-family: var(--mono);
-      font-size: 10px;
-      padding: 0.3rem 0.7rem;
+      font-size: 11px;
+      padding: 0.4rem 0.9rem;
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      border-radius: 100px;
+      border-radius: 6px;
       color: var(--text-muted);
       letter-spacing: 0.03em;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       cursor: default;
     }
 
     .tag:hover {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text);
-      transform: translateY(-1px);
+      background: rgba(0, 255, 156, 0.1);
+      color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
     }
 
     .exp-items {
@@ -531,57 +592,64 @@
 
     .project-card {
       position: relative;
-      height: 380px;
+      height: 400px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 2rem;
+      padding: 2.5rem;
       overflow: hidden;
       cursor: pointer;
-      border-radius: 12px;
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .project-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+      transform: translateY(-10px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-glow);
     }
 
+    /* GRADIENT OVERLAYS */
     .project-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0);
-      transition: background 0.3s;
-      border-radius: 12px;
+      background: linear-gradient(to bottom, transparent 30%, rgba(0, 0, 0, 0.9));
+      z-index: 1;
+      transition: opacity 0.3s;
     }
 
     .project-card:hover::before {
-      background: rgba(0, 0, 0, 0.1);
+      opacity: 0.8;
     }
 
     .p1 {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     }
 
     .p2 {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
     }
 
     .p3 {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
     }
 
     .p4 {
-      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      background: linear-gradient(135deg, #450a0a 0%, #0f172a 100%);
     }
 
     .p5 {
-      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      background: linear-gradient(135deg, #422006 0%, #0f172a 100%);
     }
 
     .p6 {
-      background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .p-meera {
+      background: linear-gradient(135deg, #4c1d95 0%, #0f172a 100%);
     }
 
     .project-badge {
@@ -658,15 +726,16 @@
     }
 
     .modal {
-      background: var(--bg);
-      border-radius: 16px;
-      max-width: 680px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 750px;
       width: 100%;
-      max-height: 88vh;
+      max-height: 90vh;
       overflow-y: auto;
-      padding: 2.5rem;
-      transform: translateY(24px);
-      transition: transform 0.25s;
+      padding: 3rem;
+      transform: translateY(30px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
     }
 
@@ -771,10 +840,11 @@
     .modal-tag {
       font-family: var(--mono);
       font-size: 10px;
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--text-muted);
+      padding: 0.4rem 0.8rem;
+      background: rgba(0, 255, 156, 0.05);
+      border: 1px solid rgba(0, 255, 156, 0.2);
+      border-radius: 6px;
+      color: var(--accent);
     }
 
     .modal-actions {
@@ -808,23 +878,25 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      margin-top: 1.5rem;
     }
 
-    .footer-social a {
+    .btn-stat {
       font-family: var(--mono);
-      font-size: 12px;
+      font-size: 11px;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
       color: var(--text-muted);
       text-decoration: none;
-      padding: 0.4rem 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
     }
 
-    .footer-social a:hover {
-      color: var(--text);
-      border-color: var(--text);
-      transform: translateY(-1px);
+    .btn-stat:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0, 255, 156, 0.05);
+      transform: translateY(-2px);
     }
 
     .footer-col h5 {
@@ -857,8 +929,8 @@
     }
 
     .footer-col ul li a:hover {
-      color: var(--text);
-      transform: translateX(4px);
+      color: var(--accent);
+      transform: translateX(6px);
     }
 
     .footer-contact-item {
@@ -977,12 +1049,11 @@
   </nav>
 
   <section class="hero" id="home">
-    <h1>UTKARSH SHARMA</h1>
-    <p class="hero-sub">Self-taught Full Stack Developer & Automation Engineer.<br>Building real systems since March
-      2025.</p>
+    <h1>DEVOPS & AUTOMATION ENGINEER</h1>
+    <p class="hero-sub">Specializing in cloud infrastructure, CI/CD pipelines, and high-scale automation. <br>Building reliable systems since March 2025.</p>
     <div class="hero-btns">
       <a href="mailto:utkarshsharma9571@gmail.com" class="btn">Contact Me</a>
-      <button class="btn-outline" onclick="openModal('resume-modal')">View Resume</button>
+      <button class="btn-outline" onclick="openResume()">View Resume</button>
     </div>
     <div class="hero-corners">
       <span class="hero-corner-text">Full Stack Developer</span>
@@ -1007,92 +1078,104 @@
     <div class="masonry-item wide"
       style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop');">
     </div>
-  </section>
-
-  <section id="about">
+  </section>  <section id="about" style="border-top: 1px solid var(--border);">
     <div class="about-grid" style="align-items: center;">
-      <div>
+      <div style="display: flex; align-items: flex-start; gap: 2rem;">
+        <span style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--accent);">01.</span>
         <h2 id="typewriter" class="typing-header"><span class="cursor"></span></h2>
       </div>
       <div class="about-text">
-        <p class="section-label" style="margin-bottom: 2rem;">// about</p>
-        I come from a non-tech background (<strong>M.Com</strong>) and started learning development in
-        <strong>2025</strong>.<br><br>
-        Right now, I’m working on <strong>real systems</strong> — deploying websites, managing a VPS, and building
-        automation workflows.<br><br>
-        I learn mostly by <strong>doing and fixing things</strong> when they break.<br><br>
-        My focus is to grow into a <strong>DevOps/automation role</strong> and work with international teams.
+        <p class="section-label" style="margin-bottom: 2rem; color: var(--accent);">// THE JOURNEY</p>
+        I come from a non-tech background (<strong>M.Com</strong>) and pivoted into engineering in <strong>2025</strong>.<br><br>
+        Currently, I am architecting <strong>production-grade systems</strong> — managing VPS fleets, implementing secure networking, and building complex automation workflows.<br><br>
+        I learn by breaking things and fixing them. My methodology is rooted in <strong>reliability and efficiency</strong>.<br><br>
+        My goal is to scale infrastructure for international teams and master the <strong>DevOps lifecycle</strong>.
       </div>
-    </div> <!-- Close about-grid early here! -->
+    </div>
 
     <div class="about-stats">
-      <div class="stat"><span class="stat-num">8+</span><span class="stat-label">Production grade n8n Workflows
-          Built</span></div>
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Live Production Sites</span></div>
-      <div class="stat"><span class="stat-num">1yr</span><span class="stat-label">Self-Taught Journey</span></div>
-      <div class="stat"><span class="stat-num">0</span><span class="stat-label">CS Degree Required</span></div>
+      <div class="stat">
+        <span class="stat-num" style="color: var(--accent);">8+</span>
+        <span class="stat-label">n8n Automation Workflows</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" style="color: var(--accent);">3</span>
+        <span class="stat-label">Live Production Sites</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" style="color: var(--accent);">1yr</span>
+        <span class="stat-label">Intensive Self-Study</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" style="color: var(--accent);">0</span>
+        <span class="stat-label">CS Degree Required</span>
+      </div>
     </div>
   </section>
+tion>
 
-  <section id="stack" style="border-top: none; padding-top: 5rem;">
+  <section id="stack" style="border-top: 1px solid var(--border); padding-top: 5rem;">
     <div class="two-col-layout">
-      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text);">··</div>
+      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--accent);">02.</div>
       <div>
         <h2
-          style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; text-transform: uppercase;">
+          style="font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: -0.02em;">
           TECH STACK</h2>
-        <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
-          I specialize in infrastructure, automation, and full-stack systems — building things that run reliably in
-          production.
+        <p style="font-family: var(--mono); font-size: 14px; color: var(--text-muted); line-height: 1.8; margin-bottom: 3rem;">
+          Powering automation and infrastructure with a modern technical toolkit.
         </p>
 
         <div class="stack-min-grid">
-          <div>
+          <div class="stat">
             <h4
-              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              style="font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em;">
               Infrastructure & DevOps</h4>
-            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">VPS ·
-              Nginx · Docker · Linux · Traefik · Dokploy · AWS EC2 · GCP · Terraform · GitHub Actions</p>
+            <div class="stack-tags" style="gap: 0.6rem;">
+              <span class="tag">VPS</span><span class="tag">Nginx</span><span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Traefik</span><span class="tag">Dokploy</span><span class="tag">AWS EC2</span><span class="tag">GCP</span><span class="tag">GitHub Actions</span>
+            </div>
           </div>
-          <div>
+          <div class="stat">
             <h4
-              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              style="font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em;">
               Automation & AI</h4>
-            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">n8n ·
-              Gemini AI · Cloudinary · Telegram Bot · Google Sheets API · REST APIs · Webhooks</p>
+            <div class="stack-tags" style="gap: 0.6rem;">
+              <span class="tag">n8n</span><span class="tag">Gemini AI</span><span class="tag">Cloudinary</span><span class="tag">Telegram Bot</span><span class="tag">Google Sheets API</span><span class="tag">Webhooks</span>
+            </div>
           </div>
-          <div>
+          <div class="stat">
             <h4
-              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              style="font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em;">
               Backend & Full Stack</h4>
-            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">Node.js ·
-              Express.js · MongoDB · PostgreSQL · React · JWT Auth · MERN Stack</p>
+            <div class="stack-tags" style="gap: 0.6rem;">
+              <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">MongoDB</span><span class="tag">PostgreSQL</span><span class="tag">React</span><span class="tag">JWT Auth</span>
+            </div>
           </div>
-          <div>
+          <div class="stat">
             <h4
-              style="font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+              style="font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em;">
               Tools & Platforms</h4>
-            <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">Git ·
-              GitHub · Odoo ERP · WordPress · Trae IDE · Cursor</p>
+            <div class="stack-tags" style="gap: 0.6rem;">
+              <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Odoo ERP</span><span class="tag">WordPress</span><span class="tag">Trae</span><span class="tag">Cursor</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="experience" style="border-top: none; padding-top: 5rem;">
+  <section id="experience" style="border-top: 1px solid var(--border); padding-top: 5rem;">
     <div class="two-col-layout">
-      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text);">··</div>
+      <div style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--accent);">03.</div>
       <div>
         <h2
-          style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 2rem; text-transform: uppercase;">
+          style="font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: -0.02em;">
           EXPERIENCE</h2>
 
-        <div style="margin-bottom: 2.5rem;">
+        <div class="stat" style="margin-bottom: 2.5rem; border-color: var(--border);">
           <h3
-            style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
+            style="font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
             GKWebTech – Full Stack & Automation Engineer</h3>
-          <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+          <p style="font-family: var(--mono); font-size: 14px; color: var(--text-muted); line-height: 1.8;">
             Sole technical owner of all production infrastructure. Managing VPS, Nginx reverse proxy, Docker containers,
             SSL, and DNS for 3 live websites. Built 8+ n8n workflows including AI chatbots, multilingual SEO blog
             pipelines, and LinkedIn automation. Self-hosted Odoo ERP from scratch. Mentoring junior developers across
@@ -1100,11 +1183,11 @@
           </p>
         </div>
 
-        <div>
+        <div class="stat" style="border-color: var(--border);">
           <h3
-            style="font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
+            style="font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 0.8rem;">
             Independent – Self-Directed Learning & Project Building</h3>
-          <p style="font-family: var(--mono); font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+          <p style="font-family: var(--mono); font-size: 14px; color: var(--text-muted); line-height: 1.8;">
             Taught myself frontend, backend, cloud, and DevOps through open-source materials. Built 40+ full-stack
             projects, deployed apps on AWS EC2 and GCP, and built CI/CD pipelines with GitHub Actions and Terraform from
             scratch with no CS background.
@@ -1114,11 +1197,26 @@
     </div>
   </section>
 
-  <section class="projects-section" id="projects">
-    <p class="section-label">// projects</p>
-    <h2 class="projects-header">FEATURED PROJECTS</h2>
-    <p class="projects-sub">Click any project to see full details, screenshots, and tech breakdown.</p>
+  <section class="projects-section" id="projects" style="border-top: 1px solid var(--border);">
+    <div style="display: flex; align-items: baseline; gap: 2rem; margin-bottom: 1rem;">
+      <span style="font-family: var(--mono); font-size: 1.5rem; font-weight: 700; color: var(--accent);">04.</span>
+      <h2 class="projects-header" style="letter-spacing: -0.02em;">FEATURED PROJECTS</h2>
+    </div>
+    <p class="section-label" style="color: var(--accent); margin-bottom: 2rem;">// THE WORK</p>
+    <p class="projects-sub">A collection of systems I've built, deployed, and maintained. Click to explore.</p>
     <div class="projects-grid">
+      <div class="project-card p-meera" onclick="openModal('modal-meera')">
+        <span class="project-badge">AI System</span>
+        <p class="project-name">Meera Chatbot</p>
+        <p class="project-type">AI WhatsApp Sales Assistant</p>
+        <div class="project-tags-row">
+          <span class="project-tag">AI</span>
+          <span class="project-tag">Automation</span>
+          <span class="project-tag">n8n</span>
+          <span class="project-tag">Chatbot</span>
+          <span class="project-tag">Lead Scoring</span>
+        </div>
+      </div>
       <div class="project-card p1" onclick="openModal('modal-gkwebtech')">
         <span class="project-badge">Live</span>
         <p class="project-name">GKWebTech</p>
@@ -1167,40 +1265,18 @@
     </div>
   </section>
 
-  <footer>
+  <footer style="background: var(--bg-dark); border-top: 1px solid var(--border); padding: 6rem 2.5rem 3rem;">
     <div class="footer-grid">
       <div class="footer-col">
-        <h5>Me</h5>
-        <p class="footer-about">Self-taught developer from Alwar, Rajasthan. Building production systems and automation
-          pipelines. Documenting the journey on YouTube.</p>
+        <h5 style="color: var(--accent);">[ MISSION ]</h5>
+        <p class="footer-about">Self-taught developer architecting automation. Documenting the intersection of DevOps, AI, and production infrastructure.</p>
         <div class="footer-social">
-          <a href="https://linkedin.com/in/utkarsh-sharma-2b9110362" target="_blank"
-            style="display: flex; align-items: center; gap: 0.5rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-            </svg>
-            LinkedIn
-          </a>
-          <a href="https://github.com/Utkarsh9571" target="_blank"
-            style="display: flex; align-items: center; gap: 0.5rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-            GitHub
-          </a>
-          <a href="mailto:utkarshsharma9571@gmail.com" style="display: flex; align-items: center; gap: 0.5rem;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
-            </svg>
-            Email
-          </a>
+          <a href="https://linkedin.com/in/utkarsh-sharma-2b9110362" target="_blank" class="btn-stat">LinkedIn</a>
+          <a href="https://github.com/Utkarsh9571" target="_blank" class="btn-stat">GitHub</a>
         </div>
       </div>
       <div class="footer-col">
-        <h5>Quick Links</h5>
+        <h5 style="color: var(--accent);">[ NAVIGATION ]</h5>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About</a></li>
@@ -1209,32 +1285,135 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Services</h5>
+        <h5 style="color: var(--accent);">[ SERVICES ]</h5>
         <ul>
-          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20VPS%20Infrastructure">VPS
-              Infrastructure</a></li>
-          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20n8n%20Automation">n8n Automation</a></li>
-          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20Full%20Stack%20Development">Full Stack
-              Dev</a></li>
-          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20DevOps%20Setup">DevOps Setup</a></li>
-          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry:%20ERP%20Deployment">ERP Deployment</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry">Infrastructure</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry">Automation</a></li>
+          <li><a href="mailto:utkarshsharma9571@gmail.com?subject=Inquiry">Full Stack</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h5>Contact Me</h5>
-        <p class="footer-contact-item">📍 Alwar, Rajasthan, India</p>
+        <h5 style="color: var(--accent);">[ CONNECT ]</h5>
+        <p class="footer-contact-item">📍 Rajasthan, India</p>
         <p class="footer-contact-item">📧 utkarshsharma9571@gmail.com</p>
-        <p class="footer-contact-item">📱 +91 9571238304</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 UTKARSH SHARMA. All rights reserved.</p>
+      <p style="color: var(--text-muted);">&copy; 2026 UTKARSH SHARMA / DEVOPS ENGINEER</p>
       <div class="footer-bottom-links">
-        <a href="https://github.com/Utkarsh9571" target="_blank">Follow Me On Github</a>
-        <a href="mailto:utkarshsharma9571@gmail.com">Have a nice day!</a>
+        <a href="https://github.com/Utkarsh9571" target="_blank" style="color: var(--accent);">ROOT@GITHUB</a>
       </div>
     </div>
   </footer>
+
+  <!-- MEERA CHATBOT MODAL -->
+  <div class="modal-overlay" data-lenis-prevent id="modal-meera" onclick="handleOverlay(event,'modal-meera')">
+    <div class="modal" data-lenis-prevent>
+      <button class="modal-close" onclick="closeModal('modal-meera')">✕</button>
+      <span class="modal-badge">AI Sales System</span>
+      <h2 class="modal-title">AI WhatsApp Chatbot — Meera (Hey Concrete)</h2>
+      <p class="modal-subtitle">AI-powered sales assistant with self-learning capability and lead scoring system</p>
+      <div class="modal-img">
+        <img class="zoomable" src="media/images/meera-chatbot.png" alt="Meera AI Chatbot System">
+      </div>
+      <div class="modal-desc">
+        <p>Built a production-ready AI WhatsApp chatbot designed to act as a human sales consultant for Hey Concrete — a premium wall cladding brand.</p>
+        <p>The system goes beyond a basic chatbot by combining structured conversation design, lead qualification, and a real-time self-learning mechanism that improves responses without redeployment.</p>
+        
+        <h3 style="color: var(--accent); margin: 1.5rem 0 0.5rem; font-size: 14px; font-family: var(--mono);">🚀 Core Features</h3>
+        <p><strong>1. Human-like Conversational Flow</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Designed natural WhatsApp-style interaction (short messages, emojis, guided flow)</li>
+          <li>Collects user data step-by-step (name, location, budget, area, style, timeline)</li>
+          <li>Avoids form-like experience — feels like chatting with a real sales agent</li>
+        </ul>
+
+        <p><strong>2. Lead Scoring Engine (100-point system)</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Budget alignment, area clarity, design intent, and engagement quality</li>
+          <li>Automatically qualifies leads</li>
+          <li>Triggers handoff to human sales (Kabir) when threshold is reached</li>
+        </ul>
+
+        <p><strong>3. Self-Learning System (Key Feature)</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Admin can correct chatbot responses in real-time</li>
+          <li>Corrections are stored as “learning rules”</li>
+          <li>Bot behavior updates instantly without redeployment</li>
+          <li>Includes versioning + rollback capability</li>
+        </ul>
+
+        <p><strong>4. Knowledge Base Architecture</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Structured product data (wall panels, breeze blocks, murals)</li>
+          <li>Includes pricing, dimensions, and product images</li>
+          <li>Ensures zero hallucination — bot only responds from verified data</li>
+        </ul>
+
+        <p><strong>5. WhatsApp-Ready Architecture</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Designed for Gupshup API integration</li>
+          <li>Supports quick replies, structured responses, and media (images)</li>
+          <li>Modular backend allows easy deployment to messaging platforms</li>
+        </ul>
+
+        <p><strong>6. Follow-up Automation System</strong></p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Multi-layer follow-up strategy (20 mins → 4 hours → 24 hours → 3 days → close)</li>
+          <li>Context-aware nudges (not generic “Hi” messages)</li>
+          <li>Lead lifecycle tracking (active → dormant → cold)</li>
+        </ul>
+
+        <h3 style="color: var(--accent); margin: 1.5rem 0 0.5rem; font-size: 14px; font-family: var(--mono);">🏗️ System Design</h3>
+        <p>The chatbot is built as a modular system:</p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Conversation Engine → handles flow + context</li>
+          <li>Knowledge Base → product + FAQ retrieval</li>
+          <li>Learning Layer → stores admin corrections</li>
+          <li>Lead Engine → scoring + qualification</li>
+          <li>Messaging Layer → WhatsApp API integration</li>
+        </ul>
+
+        <h3 style="color: var(--accent); margin: 1.5rem 0 0.5rem; font-size: 14px; font-family: var(--mono);">⚙️ Tech Stack</h3>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Node.js / Backend logic</li>
+          <li>n8n (automation workflows & orchestration)</li>
+          <li>LLM APIs (for natural conversation)</li>
+          <li>REST APIs & Webhooks</li>
+          <li>MongoDB (data storage)</li>
+          <li>Cloudinary (image handling)</li>
+        </ul>
+
+        <h3 style="color: var(--accent); margin: 1.5rem 0 0.5rem; font-size: 14px; font-family: var(--mono);">💡 Key Insight</h3>
+        <p>Most chatbots fail because they are either:</p>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Too scripted (rigid), or</li>
+          <li>Too AI-driven (hallucinate)</li>
+        </ul>
+        <p>This system solves both by combining: <strong>👉 structured flow + controlled AI + real-time learning</strong></p>
+
+        <h3 style="color: var(--accent); margin: 1.5rem 0 0.5rem; font-size: 14px; font-family: var(--mono);">📈 Outcome</h3>
+        <ul style="margin-bottom: 1rem; padding-left: 1rem;">
+          <li>Converts conversations into qualified leads</li>
+          <li>Reduces manual sales effort</li>
+          <li>Continuously improves without developer intervention</li>
+        </ul>
+        <p>This project reflects my approach to building systems: <strong>👉 practical, scalable, and aligned with real business use cases</strong></p>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">AI Systems</span>
+        <span class="modal-tag">Automation</span>
+        <span class="modal-tag">n8n</span>
+        <span class="modal-tag">Node.js</span>
+        <span class="modal-tag">WhatsApp API</span>
+        <span class="modal-tag">LLM Integration</span>
+      </div>
+      <div class="modal-actions">
+        <a href="#" target="_blank" class="btn">View Demo</a>
+        <a href="https://github.com/Utkarsh9571" target="_blank" class="btn-outline">View Code</a>
+      </div>
+    </div>
+  </div>
 
   <!-- RESUME MODAL -->
   <div class="modal-overlay" data-lenis-prevent id="resume-modal" onclick="handleOverlay(event,'resume-modal')">
@@ -1398,10 +1577,18 @@
   </div>
 
   <script>
+    function openResume() {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.open('media/Utkarsh_Sharma_Resume.pdf', '_blank');
+      } else {
+        openModal('resume-modal');
+      }
+    }
+
     function openModal(id) {
       document.getElementById(id).classList.add('active');
       document.body.style.overflow = 'hidden';
-
     }
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
